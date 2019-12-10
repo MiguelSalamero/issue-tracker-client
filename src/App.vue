@@ -7,6 +7,7 @@
 <script>
 import Issues from './components/Issues.vue'
 
+
 export default {
   name: 'app',
   components: {
