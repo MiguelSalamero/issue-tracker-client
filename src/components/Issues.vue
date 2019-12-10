@@ -4,6 +4,15 @@
       <h1>Issues</h1>
     </div>
     <br>
+    <div class="container-fluid">
+      <div id = pageActions class="row float-right">
+          <button class="btn btn-light">Create Issue</button>
+          <button class="btn btn-light">Logout</button>
+      </div>
+    </div>
+
+
+
     <table class="table text-left">
       <thead class="thead-dark">
         <tr>
@@ -25,7 +34,7 @@
           <td>{{issue.Title}}</td>
           <td>{{issue.Description}}</td>
           <td>{{issue.Type}}</td>
-          <td>{{issue.Prority}}</td>
+          <td>{{issue.Priority}}</td>
           <td>{{issue.Status}}</td>
           <td>{{issue.Votes}}</td>
           <td>{{issue.asignee_id}}</td>
@@ -64,6 +73,12 @@
 </script>
 
 <style>
+
+#pageActions {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
 
 #app{
   margin-left: 30px;
