@@ -1,12 +1,12 @@
 <template>
   <div >
-    <div class="header text-left">
+    <div class="header pt-5 text-left">
       <h1>Issues</h1>
     </div>
     <br>
     <div class="container-fluid">
       <div id = pageActions class="row float-right">
-          <button class="btn btn-light"><router-link to="/newissue"> Create issueee</router-link></button>
+          <button class="btn btn-light"><router-link to="/newissue"> Create issue</router-link></button>
           <button class="btn btn-light">Logout</button>
       </div>
     </div>
@@ -28,8 +28,8 @@
       </thead>
       <tbody>
         <tr v-for="issue in issues" v-bind:key="issue.id"> 
-          <td>{{issue.id}}</td>
-          <td>{{issue.Title}}</td>
+          <td>#{{issue.id}}</td>
+          <td> <router-link :to="{ name: 'ShowIssue', params: { id: issue.id }}">{{issue.Title}}</router-link></td>
           <td>{{issue.Description}}</td>
           <td>{{issue.Type}}</td>
           <td>{{issue.Priority}}</td>
