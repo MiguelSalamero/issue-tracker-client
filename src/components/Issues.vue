@@ -6,12 +6,10 @@
     <br>
     <div class="container-fluid">
       <div id = pageActions class="row float-right">
-          <button class="btn btn-light">Create Issue</button>
+          <button class="btn btn-light"><router-link to="/newissue"> Create issueee</router-link></button>
           <button class="btn btn-light">Logout</button>
       </div>
     </div>
-
-
 
     <table class="table text-left">
       <thead class="thead-dark">
