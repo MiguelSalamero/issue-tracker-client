@@ -16,7 +16,6 @@
         <tr>
           <th style="width: 5%" scope="col">id</th>
           <th style="width: 35%" scope="col">Title</th>
-          <th scope="col">Description</th>
           <th scope="col">T</th>
           <th scope="col">P</th>
           <th scope="col">Status</th>
@@ -30,7 +29,6 @@
         <tr v-for="issue in issues" v-bind:key="issue.id"> 
           <td>#{{issue.id}}</td>
           <td> <router-link :to="{ name: 'ShowIssue', params: { id: issue.id }}">{{issue.Title}}</router-link></td>
-          <td>{{issue.Description}}</td>
           <td>{{issue.Type}}</td>
           <td>{{issue.Priority}}</td>
           <td>{{issue.Status}}</td>

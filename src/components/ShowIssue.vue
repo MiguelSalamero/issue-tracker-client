@@ -29,8 +29,16 @@
     </div>
     <div class="issue-comments-container">
       
-      <h2>Comments (0)</h2>
-      
+      <h2>Comments({{comments.length}})</h2>
+        <tr v-for="comment in comments" v-bind:key="comment.id"> 
+        <div>
+          <p><b>{{comment.user_id}}</b></p>
+          <p style="font-size: 100%">{{comment.text}}</p>
+          <p class="text-muted" style="font-size: 90%">
+          {{comment.created_at | dateshow}}
+        </p></div>
+        <br>
+        </tr>
       
       <form >
         <div>
@@ -163,7 +171,8 @@ export default {
   name: 'ShowIssue',
   data() {
     return {
-        issue: null
+        issue: null,
+        comments: null
     }
   },
   created: function() {
@@ -171,6 +180,11 @@ export default {
       .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.$route.params.id+'/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
       .then(res => {
         this.issue = res.data;
+      })
+    axios
+      .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.$route.params.id+'/comments/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+      .then(res => {
+        this.comments = res.data;
       })
   },
   filters: {
