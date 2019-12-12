@@ -42,14 +42,17 @@
       
       <form >
         <div>
-          <textarea placeholder="What do you want to say?" class="form-control" name="comment[text]" id="comment_text"></textarea>
+          <textarea v-model="comment_text" placeholder="What do you want to say?" class="form-control" name="comment[text]" id="comment_text"></textarea>
           <br>
           <input type="file" name="comment[attachment]" id="comment_attachment"><br>
           <i>Not implemented yet</i>
           <hr>
-          <input type="submit" name="commit" value="Create comment" class="btn btn-outline-secondary" data-disable-with="Create comment">
+          <button v-on:click="createComment" type="button" class="btn btn-outline-secondary" data-disable-with="Create comment">
+          <router-link to="/">Create Comment </router-link>
+          </button>
         </div>
-</form>    </div>
+      </form>    
+    </div>
 
     
   </div>
@@ -173,10 +176,13 @@ export default {
   data() {
     return {
         issue: null,
-        comments: null
+        comments: null,
+        comment_text: '',
+        issue_id: ''
     }
   },
   created: function() {
+    this.issue_id = this.$route.params.id
     axios
       .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.$route.params.id+'/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
       .then(res => {
@@ -191,6 +197,12 @@ export default {
   filters: {
     dateshow: function(value) {
       return moment(value).fromNow();
+    }
+  },
+  methods: {
+    createComment: function() {
+      axios
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?text='+this.comment_text+' &api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
     }
   }
 
