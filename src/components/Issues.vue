@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <table class="table text-left">
+    <table class="table text-left table-hover">
       <thead class="thead-dark">
         <tr>
           <th style="width: 5%" scope="col">id</th>

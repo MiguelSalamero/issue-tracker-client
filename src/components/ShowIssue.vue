@@ -106,7 +106,8 @@
     <div class="issue-attrs">
           <dl>
             <dt> Asignee </dt>
-              <dd><a href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">{{issue.asignee_id}}</a></dd>
+              <dd><a v-if="issue.assignee_id == null" href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">-</a>
+              <a v-else href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">{{issue.asignee_id}}</a></dd>
           </dl>
           <dl>
             <dt> Type </dt>
