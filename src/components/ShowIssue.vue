@@ -127,8 +127,10 @@
           <dl>
             <dt>Votes</dt>
               <dd>
-                  <a v-if="issue.Votes == null" class="vote" rel="nofollow" data-method="post" href="https://blooming-dusk-00596.herokuapp.com/issues/3/vote">Vote for this issue</a>
-                  <a v-else class="vote" rel="nofollow" data-method="post" href="https://blooming-dusk-00596.herokuapp.com/issues/3/vote">{{issue.Votes}}</a>
+                {{issue.Votes}} -
+                <a v-on:click="vote" class="vote" rel="nofollow" href="#">Vote </a>
+                <a v-on:click="unvote" class="vote" rel="nofollow" href="#">Unvote</a>
+
 
               </dd>
           </dl>
@@ -203,6 +205,14 @@ export default {
     createComment: function() {
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?text='+this.comment_text+' &api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+    },
+    vote: function() {
+      axios
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
+    },
+    unvote: function() {
+      axios
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unvote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
     }
   }
 
