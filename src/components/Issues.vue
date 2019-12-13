@@ -20,7 +20,6 @@
           <th scope="col">P</th>
           <th scope="col">Status</th>
           <th scope="col">Votes</th>
-          <th scope="col">Assignee</th>
           <th scope="col">Created</th>
           <th scope="col">Updated</th>
         </tr>
@@ -33,7 +32,6 @@
           <td>{{issue.Priority}}</td>
           <td>{{issue.Status}}</td>
           <td>{{issue.Votes}}</td>
-          <td>{{issue.asignee_id}}</td>
           <td>{{issue.created_at | dateshow}}</td>
           <td>{{issue.updated_at | dateshow}}</td>
         </tr>

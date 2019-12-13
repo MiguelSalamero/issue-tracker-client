@@ -137,7 +137,9 @@
           <dl>
             <dt>Watchers</dt>
               <dd>
-                    <a class="vote" rel="nofollow" data-method="post" href="https://blooming-dusk-00596.herokuapp.com/issues/3/watch?view=issue">{{issue.Watchers}}</a>
+                {{issue.Watchers}} -
+                <a v-on:click="watch" class="vote" rel="nofollow" href="#">Watch </a>
+                <a v-on:click="unwatch" class="vote" rel="nofollow" href="#">Unwatch</a>
               </dd>
           </dl>
         </div>
@@ -217,6 +219,14 @@ export default {
     unvote: function() {
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unvote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
+    },
+    watch: function() {
+      axios
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/watch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
+    },
+    unwatch: function() {
+      axios
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
     }
   }
 
