@@ -17,7 +17,7 @@
       <div class="column col-sm-9">
         <div class="px-3">
           <p style="font-size: 90%">
-            <strong> {{issue.user_id}}</strong> created an issue {{issue.created_at | dateshow}}
+            <strong> {{creatorName}}</strong> created an issue {{issue.created_at | dateshow}}
           </p>
           <p style="font-size: 100%">
               {{issue.Description}}
@@ -110,7 +110,7 @@
           <dl>
             <dt> Asignee </dt>
               <dd><a v-if="issue.assignee_id == null" href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">-</a>
-              <a v-else href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">{{issue.asignee_id}}</a></dd>
+              <a v-else href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">{{assigneeName}}</a></dd>
           </dl>
           <dl>
             <dt> Type </dt>
@@ -180,7 +180,9 @@ export default {
         issue: null,
         comments: null,
         comment_text: '',
-        issue_id: ''
+        issue_id: '',
+        creatorName: '',
+        assigneeName: ''
     }
   },
   created: function() {
@@ -188,7 +190,9 @@ export default {
     axios
       .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.$route.params.id+'/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
       .then(res => {
-        this.issue = res.data;
+        this.issue = res.data.issue;
+        this.creatorName = res.data.userCreatorName;
+        this.assigneeName = res.data.userAssignedName;  
       })
     axios
       .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.$route.params.id+'/comments/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
