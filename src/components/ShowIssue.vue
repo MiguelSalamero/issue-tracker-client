@@ -64,8 +64,8 @@
       <div class="">
         <div class="row pb-3">
           <div class="">
-              <a v-if = "issue.Status === 'Resolved'" class="btn btn-primary" style="color: white">Open</a>
-              <a v-else class="btn btn-primary" style="color: white">Resolve</a> 
+              <a v-on:click="status('Open')" v-if = "issue.Status === 'Resolved'" class="btn btn-primary" style="color: white">Open</a>
+              <a v-on:click="status('Resolved')" v-else class="btn btn-primary" style="color: white">Resolve</a> 
           </div>
           
            <div>
@@ -229,7 +229,12 @@ export default {
     unwatch: function() {
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
+    },
+    status: function(newstatus) {
+      axios
+        .put('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/status?Status='+newstatus+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}}) 
     }
+
   }
 
 }
