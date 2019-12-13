@@ -61,10 +61,11 @@
 </div>
 
   <div class= "pt-5" style="float:left;">
-      <div style="width: 100%" class="sidebar col-sm-3">
+      <div class="">
         <div class="row pb-3">
-          <div class="pr-1">
-              <a class="btn btn-primary" style="color: white">Open</a> 
+          <div class="">
+              <a v-if = "issue.Status === 'Resolved'" class="btn btn-primary" style="color: white">Open</a>
+              <a v-else class="btn btn-primary" style="color: white">Resolve</a> 
           </div>
           
            <div>
@@ -81,11 +82,12 @@
                 </div>
               </div>
           </div> 
-          <div class="pl-3">
+          
+          <div class="">
             <button type="button" class="btn btn-light"> Attach </button> 
           </div>
     
-          <div class="col-sm-2">
+          <div class="">
             <button class="btn btn-light">
                 Edit
             </button>
@@ -98,7 +100,7 @@
           </div>
 
 
-          <div class="pl-1">
+          <div class="" >
             <button class="btn btn-light">     
               <router-link to="/">Back</router-link>
             </button>
@@ -109,8 +111,8 @@
     <div class="issue-attrs">
           <dl>
             <dt> Asignee </dt>
-              <dd><a v-if="issue.assignee_id == null" href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">-</a>
-              <a v-else href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">{{assigneeName}}</a></dd>
+              <dd><a v-if="assigneeName !== null" href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">{{assigneeName}}</a>
+              <a v-else href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">-</a></dd>
           </dl>
           <dl>
             <dt> Type </dt>
