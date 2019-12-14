@@ -48,7 +48,7 @@
           <i>Not implemented yet</i>
           <hr>
           <button v-on:click="createComment" type="button" class="btn btn-outline-secondary" data-disable-with="Create comment">
-          <router-link to="/">Create Comment </router-link>
+          Create Comment
           </button>
         </div>
       </form>    
@@ -72,13 +72,12 @@
               <div class="dropdown2">
                 <button type="button" class="btn btn-secondary dropdown-toggle">Workflow</button>
                 <div class="dropdown-content">
-                    <li>New</li> 
-                    <li>Open</li> 
-                    <li>On hold</li> 
-                    <li>Resolved</li> 
-                    <li>Invalid</li> 
-                    <li>Won't fix</li> 
-                    <li>Closed</li> 
+                    <li><a v-on:click="status('New')" href="#"> New</a></li> 
+                    <li><a v-on:click="status('Open')" href="#">Open</a></li> 
+                    <li><a v-on:click="status('On hold')" href="#">On hold</a></li> 
+                    <li><a v-on:click="status('Duplicate')" href="#">Duplicate</a></li> 
+                    <li><a v-on:click="status('Invalid')" href="#">Invalid</a></li> 
+                    <li><a v-on:click="status('Closed')" href="#">Closed</a></li> 
                 </div>
               </div>
           </div> 
@@ -190,19 +189,8 @@ export default {
     }
   },
   created: function() {
-    this.issue_id = this.$route.params.id
-    axios
-      .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.$route.params.id+'/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
-      .then(res => {
-        this.issue = res.data.issue;
-        this.creatorName = res.data.userCreatorName;
-        this.assigneeName = res.data.userAssignedName;  
-      })
-    axios
-      .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.$route.params.id+'/comments/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
-      .then(res => {
-        this.comments = res.data;
-      })
+    this.fetchDataIssue()
+    this.fetchDataComments()
   },
   filters: {
     dateshow: function(value) {
@@ -210,17 +198,43 @@ export default {
     }
   },
   methods: {
+    fetchDataIssue: function() {
+      this.issue_id = this.$route.params.id
+      axios
+        .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.$route.params.id+'/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+        .then(res => {
+          this.issue = res.data.issue;
+          this.creatorName = res.data.userCreatorName;
+          this.assigneeName = res.data.userAssignedName;  
+        })
+    },
+    fetchDataComments: function() {
+      axios
+        .get('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+        .then(res => {
+          this.comments = res.data;
+        })
+    },
     createComment: function() {
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?text='+this.comment_text+' &api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?text='+this.comment_text+' &api_key=9zWzwy3pR5wrVcukdvz2')
+        .then(
+          this.$router.go()
+        )
+      
+      this.comment_text = ""
+
     },
     vote: function() {
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2')
+        .then(this.$nextTick(() => {this.fetchDataIssue()}))
+            
     },
     unvote: function() {
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unvote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unvote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})  
+      this.fetchDataIssue()    
     },
     watch: function() {
       axios
@@ -230,9 +244,11 @@ export default {
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
     },
-    status: function(newstatus) {
+    status: function(newIssueStatus) {
       axios
-        .put('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/status?Status='+newstatus+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}}) 
+        .put('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/status?Status='+newIssueStatus+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}}) 
+        .finally(this.$nextTick(() => {this.fetchDataIssue()}))
+      
     }
 
   }
