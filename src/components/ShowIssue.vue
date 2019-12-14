@@ -93,11 +93,10 @@
           </div>
     
           <div class="">
-            <button class="btn btn-light" value="Delete">
+            <button class="btn btn-light" value="deleteIssue" v-on:click="deleteIssue">
                 Delete
             </button>
           </div>
-
 
           <div class="" >
             <button class="btn btn-light">     
@@ -239,16 +238,24 @@ export default {
     watch: function() {
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/watch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
     },
     unwatch: function() {
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
     },
     status: function(newIssueStatus) {
       axios
         .put('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/status?Status='+newIssueStatus+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}}) 
         .finally(this.$nextTick(() => {this.fetchDataIssue()}))
-      
+
+        var text = "The status was changed to "+newIssueStatus+ " by "
+      axios
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?text='+text+' &api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+    },
+    deleteIssue: function() {
+      axios
+        .delete('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
     }
 
   }
