@@ -226,27 +226,27 @@ export default {
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?text='+this.comment_text+' &api_key=9zWzwy3pR5wrVcukdvz2')
         .then(
-          this.$router.go()
+          sleep(800)
+            .then(() => {this.fetchDataComments()})
         )
-      
       this.comment_text = ""
-
     },
     vote: function() {
-      this.issue = null
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2')
-        .then(this.$nextTick(() => {this.fetchDataIssue()}))
-      this.$nextTick(() => {this.fetchDataIssue()})
-      this.$forceUpdate()
+        .then(
+          sleep(800)
+            .then(() => {this.fetchDataIssue()})
+        )
             
     },
     unvote: function() {
-      this.issue = null
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unvote?api_key=9zWzwy3pR5wrVcukdvz2')  
-      this.$nextTick(() => {this.fetchDataIssue()})
-      this.$forceUpdate()  
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unvote?api_key=9zWzwy3pR5wrVcukdvz2')
+        .then(
+          sleep(800)
+            .then(() => {this.fetchDataIssue()})
+        )
     },
     watch: function() {
       axios
