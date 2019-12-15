@@ -172,10 +172,12 @@
 <script>
 
 import axios from 'axios';
-import moment from 'moment'
+import moment from 'moment';
+
 
 axios.defaults.headers.post['Accept'] = '*/*';
 axios.defaults.headers.put['Accept'] = '*/*';
+axios.defaults.headers.delete['Accept'] = '*/*';
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -281,7 +283,12 @@ export default {
     },
     deleteIssue: function() {
       axios
-        .delete('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'&api_key=9zWzwy3pR5wrVcukdvz2')
+        .delete('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'?api_key=9zWzwy3pR5wrVcukdvz2')
+        .then(res => {
+          if (res.status == 200) {
+            this.$router.push({ name: 'issues' })
+          }
+        })
     }
 
   }
