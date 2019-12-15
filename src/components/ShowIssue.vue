@@ -174,6 +174,12 @@
 import axios from 'axios';
 import moment from 'moment'
 
+axios.defaults.headers.post['Accept'] = '*/*';
+axios.defaults.headers.put['Accept'] = '*/*';
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export default {
   name: 'ShowIssue',
@@ -204,8 +210,10 @@ export default {
         .then(res => {
           this.issue = res.data.issue;
           this.creatorName = res.data.userCreatorName;
-          this.assigneeName = res.data.userAssignedName;  
+          this.assigneeName = res.data.userAssignedName;
+          this.$forceUpdate() 
         })
+
     },
     fetchDataComments: function() {
       axios
@@ -225,37 +233,55 @@ export default {
 
     },
     vote: function() {
+      this.issue = null
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2')
         .then(this.$nextTick(() => {this.fetchDataIssue()}))
+      this.$nextTick(() => {this.fetchDataIssue()})
+      this.$forceUpdate()
             
     },
     unvote: function() {
+      this.issue = null
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unvote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})  
-      this.fetchDataIssue()    
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unvote?api_key=9zWzwy3pR5wrVcukdvz2')  
+      this.$nextTick(() => {this.fetchDataIssue()})
+      this.$forceUpdate()  
     },
     watch: function() {
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/watch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})      
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/watch?api_key=9zWzwy3pR5wrVcukdvz2')      
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2')  
+      this.$nextTick(() => {this.fetchDataIssue()})
+      this.$forceUpdate() 
     },
     unwatch: function() {
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2')  
+      this.$nextTick(() => {this.fetchDataIssue()})
+      this.$forceUpdate() 
     },
     status: function(newIssueStatus) {
+      var text = "The status was changed to "+newIssueStatus+ " by "
       axios
-        .put('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/status?Status='+newIssueStatus+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}}) 
-        .finally(this.$nextTick(() => {this.fetchDataIssue()}))
-
-        var text = "The status was changed to "+newIssueStatus+ " by "
-      axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?text='+text+' &api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+        .put('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/status?Status='+newIssueStatus+'&api_key=9zWzwy3pR5wrVcukdvz2')
+        .then(res => {
+          if (res.status == 200) {
+            sleep(800)
+            .then(() => {this.$nextTick(() => {
+              this.fetchDataIssue(),
+              axios
+                .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/?text='+text+' &api_key=9zWzwy3pR5wrVcukdvz2'),
+              sleep(800)
+              .then(() => this.fetchDataComments())
+            })})
+          }
+        })
+ 
     },
     deleteIssue: function() {
       axios
-        .delete('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+        .delete('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'&api_key=9zWzwy3pR5wrVcukdvz2')
     }
 
   }
