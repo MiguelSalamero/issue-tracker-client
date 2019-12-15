@@ -259,9 +259,11 @@ export default {
     },
     unwatch: function() {
       axios
-        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2')  
-      this.$nextTick(() => {this.fetchDataIssue()})
-      this.$forceUpdate() 
+        .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/unwatch?api_key=9zWzwy3pR5wrVcukdvz2')
+        .then(
+          sleep(800)
+            .then(() => {this.fetchDataIssue()})
+        )
     },
     status: function(newIssueStatus) {
       var text = "The status was changed to "+newIssueStatus+ " by "
@@ -279,7 +281,6 @@ export default {
             })})
           }
         })
- 
     },
     deleteIssue: function() {
       axios
