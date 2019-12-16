@@ -24,8 +24,8 @@
     <table class="table text-left table-hover">
       <thead class="thead-dark">
         <tr>
-          <th style="width: 5%" scope="col"><a v-on:click="sortby('Title')" href="#"> id</a></th>
-          <th style="width: 35%" scope="col">Title</th>
+          <th style="width: 5%" scope="col"></th>
+          <th style="width: 35%" scope="col"><a v-on:click="sortby('Title')" href="#">Title</a></th>
           <th scope="col"><a v-on:click="sortby('kind')" href="#"> T</a></th>
           <th scope="col"><a v-on:click="sortby('priority')" href="#"> P</a></th>
           <th scope="col"><a v-on:click="sortby('status')" href="#"> Status</a></th>
@@ -39,9 +39,9 @@
         <tr v-for="issue in issues" v-bind:key="issue.id"> 
           <td>#{{issue.id}}</td>
           <td> <router-link :to="{ name: 'ShowIssue', params: { id: issue.id }}">{{issue.Title}}</router-link></td>
-          <td>{{issue.Type}}    <a v-on:click="filterby('type='+issue.Type)" href="#"></a></td>
-          <td>{{issue.Priority}}<a v-on:click="filterby('priority='+issue.Priority)" href="#"></a></td>
-          <td>{{issue.Status}}  <a v-on:click="filterby('status='+issue.Status)" href="#"></a></td>
+          <td> <a v-on:click="filterby('type='+issue.Type)" href="#"> {{issue.Type}}</a></td>
+          <td> <a v-on:click="filterby('priority='+issue.Priority)" href="#"> {{issue.Priority}}</a></td>
+          <td> <a v-on:click="filterby('status='+issue.Status)" href="#"> {{issue.Status}}</a></td>
           <td>{{issue.Votes}}</td>
           <td>{{issue.Assignee}}</td>
           <td>{{issue.created_at | dateshow}}</td>
