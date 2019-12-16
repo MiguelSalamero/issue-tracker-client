@@ -74,21 +74,23 @@
           this.issues = res.data;
         })
     },
-    sortby: function(sorting) {
-		axios
-		.get('https://blooming-dusk-00596.herokuapp.com/api/issues?sort='+sorting+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
-		.then(res => {
-			sleep(800)
-          this.issues = res.data;
-        }) 
-    },
-    filterby: function(filter) {
-		axios
-		.get('https://blooming-dusk-00596.herokuapp.com/api/issues?'+filter+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
-		.then(res => {
-			sleep(800)
-          this.issues = res.data;
-        }) 
+    methods: {
+      sortby: function(sorting) {
+        axios
+          .get('https://blooming-dusk-00596.herokuapp.com/api/issues?sort='+sorting+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+          .then(res => {
+            sleep(800)
+            this.issues = res.data;
+          }) 
+      },
+      filterby: function(filter) {
+        axios
+          .get('https://blooming-dusk-00596.herokuapp.com/api/issues?'+filter+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+          .then(res => {
+        sleep(800)
+      this.issues = res.data;
+      }) 
+    }
     },
     filters: {
       dateshow: function(value) {
