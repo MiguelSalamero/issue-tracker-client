@@ -11,27 +11,39 @@
       </div>
     </div>
 
+	<thead class="thead-dark">
+        <tr>
+          <th scope="col">Filter by: </th>
+          <th scope="col"><a v-on:click="created()" href="#"> All</a></th>
+          <th scope="col"><a v-on:click="filterby('status=New%26Open')" href="#"> Open </a></th>
+          <th scope="col"><a v-on:click="filterby('assignee='+1)" href="#"> My issues </a></th>
+          <th scope="col"><a v-on:click="filterby('watcher='+1)" href="#"> Watching </a></th>
+        </tr>
+      </thead>
+
     <table class="table text-left table-hover">
       <thead class="thead-dark">
         <tr>
-          <th style="width: 5%" scope="col">id</th>
+          <th style="width: 5%" scope="col"><a v-on:click="sortby('Title')" href="#"> id</a></th>
           <th style="width: 35%" scope="col">Title</th>
-          <th scope="col">T</th>
-          <th scope="col">P</th>
-          <th scope="col">Status</th>
-          <th scope="col">Votes</th>
-          <th scope="col">Created</th>
-          <th scope="col">Updated</th>
+          <th scope="col"><a v-on:click="sortby('kind')" href="#"> T</a></th>
+          <th scope="col"><a v-on:click="sortby('priority')" href="#"> P</a></th>
+          <th scope="col"><a v-on:click="sortby('status')" href="#"> Status</a></th>
+          <th scope="col"><a v-on:click="sortby('votes')" href="#"> Votes</a></th>
+          <th scope="col"><a v-on:click="sortby('assignee')" href="#"> Assignee</a></th>
+          <th scope="col"><a v-on:click="sortby('created')" href="#"> Created</a></th>
+          <th scope="col"><a v-on:click="sortby('updated')" href="#"> Updated</a></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="issue in issues" v-bind:key="issue.id"> 
           <td>#{{issue.id}}</td>
           <td> <router-link :to="{ name: 'ShowIssue', params: { id: issue.id }}">{{issue.Title}}</router-link></td>
-          <td>{{issue.Type}}</td>
-          <td>{{issue.Priority}}</td>
-          <td>{{issue.Status}}</td>
+          <td>{{issue.Type}}    <a v-on:click="filterby('type='+issue.Type)" href="#"></a></td>
+          <td>{{issue.Priority}}<a v-on:click="filterby('priority='+issue.Priority)" href="#"></a></td>
+          <td>{{issue.Status}}  <a v-on:click="filterby('status='+issue.Status)" href="#"></a></td>
           <td>{{issue.Votes}}</td>
+          <td>{{issue.Assignee}}</td>
           <td>{{issue.created_at | dateshow}}</td>
           <td>{{issue.updated_at | dateshow}}</td>
         </tr>
@@ -43,6 +55,10 @@
 <script>
   import axios from 'axios';
   import moment from 'moment'
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
 
   export default {
     name: 'Issues',
@@ -57,6 +73,22 @@
         .then(res => {
           this.issues = res.data;
         })
+    },
+    sortby: function(sorting) {
+		axios
+		.get('https://blooming-dusk-00596.herokuapp.com/api/issues?sort='+sorting+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+		.then(res => {
+			sleep(800)
+          this.issues = res.data;
+        }) 
+    },
+    filterby: function(filter) {
+		axios
+		.get('https://blooming-dusk-00596.herokuapp.com/api/issues?'+filter+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+		.then(res => {
+			sleep(800)
+          this.issues = res.data;
+        }) 
     },
     filters: {
       dateshow: function(value) {
