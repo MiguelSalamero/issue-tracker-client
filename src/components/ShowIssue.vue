@@ -90,7 +90,7 @@
     
           <div class="">
             <button class="btn btn-light">
-                Edit
+                <router-link :to="{ name: 'EditIssue', params: { id: issue.id }}"> Edit </router-link>
             </button>
           </div>
     
@@ -111,20 +111,20 @@
     <div class="issue-attrs">
           <dl>
             <dt> Asignee </dt>
-              <dd><a v-if="assigneeName !== null" href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">{{assigneeName}}</a>
-              <a v-else href="https://blooming-dusk-00596.herokuapp.com/issues?assignee=5">-</a></dd>
+              <dd><a v-if="assigneeName !== null" href="#">{{assigneeName}}</a>
+              <a v-else href="">-</a></dd>
           </dl>
           <dl>
             <dt> Type </dt>
-              <dd><a href="https://blooming-dusk-00596.herokuapp.com/issues?type=Task"><img src="IssueTracker_show_files/Task.webp" width="20" height="20"> {{issue.Type}}</a></dd>
+              <dd><a href=""> {{issue.Type}}</a></dd>
           </dl>
           <dl>
             <dt>Priority</dt>
-              <dd><a href="https://blooming-dusk-00596.herokuapp.com/issues?priority=Major"><img src="IssueTracker_show_files/Major.webp" width="20" height="20"> {{issue.Priority}}</a></dd>
+              <dd><a href="#"> {{issue.Priority}}</a></dd>
           </dl>
           <dl>
             <dt>Status</dt>
-            <dd><a href="https://blooming-dusk-00596.herokuapp.com/issues?status=Duplicate">{{issue.Status}}</a></dd>
+            <dd><a href="#">{{issue.Status}}</a></dd>
           </dl>
           <dl>
             <dt>Votes</dt>
