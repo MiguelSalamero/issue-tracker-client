@@ -25,14 +25,18 @@
       <thead class="thead-dark">
         <tr>
           <th style="width: 5%" scope="col"></th>
-          <th style="width: 35%" scope="col"><a v-on:click="sortby('Title')" href="#">Title</a></th>
+          <th v-if = "sorttitle" style="width: 35%" scope="col"><a v-on:click="sortby('Title')" href="#">Title</a></th>
+          <th v-else style="width: 35%" scope="col"><a v-on:click="sortby('-Title')" href="#">Title</a></th>
           <th scope="col"><a v-on:click="sortby('kind')" href="#"> T</a></th>
           <th scope="col"><a v-on:click="sortby('priority')" href="#"> P</a></th>
           <th scope="col"><a v-on:click="sortby('status')" href="#"> Status</a></th>
           <th scope="col"><a v-on:click="sortby('votes')" href="#"> Votes</a></th>
-          <th scope="col"><a v-on:click="sortby('assignee')" href="#"> Assignee</a></th>
-          <th scope="col"><a v-on:click="sortby('created')" href="#"> Created</a></th>
-          <th scope="col"><a v-on:click="sortby('updated')" href="#"> Updated</a></th>
+          <th v-if = "sortassignee" scope="col"><a v-on:click="sortby('assignee')" href="#"> Assignee</a></th>
+          <th v-else scope="col"><a v-on:click="sortby('-assignee')" href="#"> Assignee</a></th>
+          <th v-if = "sortcreated" scope="col"><a v-on:click="sortby('created')"  href="#"> Created</a></th>
+          <th v-else scope="col"><a v-on:click="sortby('-created')" href="#"> Created</a></th>          
+          <th v-if = "sortupdated" scope="col"><a v-on:click="sortby('updated')" href="#"> Updated</a></th>          
+          <th v-else scope="col"><a v-on:click="sortby('-updated')" href="#"> Updated</a></th>
         </tr>
       </thead>
       <tbody>
@@ -65,6 +69,10 @@
     data() {
       return {
         issues: null,
+        sortcreated: false,
+        sortupdated: false,
+        sorttitle: false,
+        sortassignee: false,
       };
     },
     created: function() {
@@ -82,6 +90,18 @@
             sleep(800)
             this.issues = res.data;
           }) 
+        if (sorting == 'created' || sorting == '-created') {
+          this.sortcreated = !this.sortcreated
+        }
+        else if (sorting == 'updated' || sorting == '-updated') {
+          this.sortupdated = !this.sortupdated
+        }
+        else if (sorting == 'Title' || sorting == '-Title') {
+          this.sorttitle = !this.sorttitle
+        }
+        else if (sorting == 'assignee' || sorting == '-assignee') {
+          this.sortassignee = !this.sortassignee
+        }
       },
       filterby: function(filter) {
         axios
