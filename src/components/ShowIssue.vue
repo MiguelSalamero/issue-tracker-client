@@ -36,6 +36,8 @@
           <p style="font-size: 100%">{{comment.text}}</p>
           <p class="text-muted" style="font-size: 90%">
           {{comment.created_at | dateshow}}
+            •
+            <a v-on:click="deleteComment(comment.id)" href="#">Delete</a>
         </p></div>
         <br>
         </tr>
@@ -232,6 +234,14 @@ export default {
             .then(() => {this.fetchDataComments()})
         )
       this.comment_text = ""
+    },
+    deleteComment: function(idComment) {
+      axios
+        .delete('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/'+idComment+' ?api_key=9zWzwy3pR5wrVcukdvz2')
+        .then(
+          sleep(800)
+            .then(() => {this.fetchDataComments()})
+        )
     },
     vote: function() {
       axios
