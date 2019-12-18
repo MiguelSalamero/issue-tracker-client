@@ -1,4 +1,12 @@
-# issuetracker
+# ASW - Issue Tracker
+
+## Authors
+
+* **Jaume Malgosa** - [TrajanoCaligula](https://github.com/TrajanoCaligula)
+* **Marc Obiols** - [Marc-Obiols](https://github.com/Marc-Obiols)
+* **Cristian Roa** - [cristianroaf](https://github.com/cristianroaf)
+* **Miguel Salamero** - [MiguelSalamero	](https://github.com/MiguelSalamero)
+
 
 ## Project setup
 ```
@@ -19,6 +27,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
