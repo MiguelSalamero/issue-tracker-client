@@ -38,6 +38,7 @@
           {{comment.created_at | dateshow}}
             •
             <a v-on:click="deleteComment(comment.id)" href="#">Delete</a>
+            •
             <a v-on:click="editComment(comment.id)" href="#">Edit</a>
         </p></div>
         <br>
