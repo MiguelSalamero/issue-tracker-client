@@ -47,7 +47,7 @@
           <td> <a v-on:click="filterby('priority='+issue.Priority)" href="#"> {{issue.Priority}}</a></td>
           <td> <a v-on:click="filterby('status='+issue.Status)" href="#"> {{issue.Status}}</a></td>
           <td>{{issue.Votes}}</td>
-          <td>{{issue.Assignee}}</td>
+          <td><a v-on:click="filterby('assignee='+issue.asignee_id)" href="#"> {{issue.asignee_id}}</a></td>
           <td>{{issue.created_at | dateshow}}</td>
           <td>{{issue.updated_at | dateshow}}</td>
         </tr>

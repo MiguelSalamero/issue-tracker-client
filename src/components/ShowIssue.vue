@@ -38,6 +38,7 @@
           {{comment.created_at | dateshow}}
             •
             <a v-on:click="deleteComment(comment.id)" href="#">Delete</a>
+            <a v-on:click="editComment(comment.id)" href="#">Edit</a>
         </p></div>
         <br>
         </tr>
@@ -243,6 +244,15 @@ export default {
             .then(() => {this.fetchDataComments()})
         )
     },
+    editComment: function(idComment) {
+      axios
+        .put('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/comments/'+idComment+'?text='+this.comment_text+'&api_key=9zWzwy3pR5wrVcukdvz2')
+        .then(
+          sleep(800)
+            .then(() => {this.fetchDataComments()})
+        )
+       this.comment_text = ""
+    },
     vote: function() {
       axios
         .post('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/vote?api_key=9zWzwy3pR5wrVcukdvz2')
@@ -276,7 +286,7 @@ export default {
         )
     },
     status: function(newIssueStatus) {
-      var text = "The status was changed to "+newIssueStatus+ " by "
+      var text = "changed the status to "+newIssueStatus
       axios
         .put('https://blooming-dusk-00596.herokuapp.com/api/issues/'+this.issue_id+'/status?Status='+newIssueStatus+'&api_key=9zWzwy3pR5wrVcukdvz2')
         .then(res => {
