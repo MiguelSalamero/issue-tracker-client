@@ -1,5 +1,7 @@
 # ASW - Issue Tracker
 
+App running at: https://still-bastion-89649.herokuapp.com
+
 ## Authors
 
 * **Jaume Malgosa** - [TrajanoCaligula](https://github.com/TrajanoCaligula)
