@@ -14,7 +14,7 @@
 	<thead class="thead-dark">
         <tr>
           <th scope="col">Filter by: </th>
-          <th scope="col"><a v-on:click="created()" href="#"> All</a></th>
+          <th scope="col"><a v-on:click="fetchDataIssue" href="#"> All</a></th>
           <th scope="col"><a v-on:click="filterby('status=New%26Open')" href="#"> Open </a></th>
           <th scope="col"><a v-on:click="filterby('assignee='+1)" href="#"> My issues </a></th>
           <th scope="col"><a v-on:click="filterby('watcher='+1)" href="#"> Watching </a></th>
@@ -76,13 +76,17 @@
       };
     },
     created: function() {
-      axios
-        .get('https://blooming-dusk-00596.herokuapp.com/api/issues?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
-        .then(res => {
-          this.issues = res.data;
-        })
+      this.fetchDataIssue()
     },
     methods: {
+      fetchDataIssue: function() {
+        axios
+          .get('https://blooming-dusk-00596.herokuapp.com/api/issues?api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+          .then(res => {
+            sleep(800)
+            this.issues = res.data;
+          })
+      },
       sortby: function(sorting) {
         axios
           .get('https://blooming-dusk-00596.herokuapp.com/api/issues?sort='+sorting+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
