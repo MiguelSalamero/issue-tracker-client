@@ -32,7 +32,14 @@
       <h2>Comments({{comments.length}})</h2>
         <tr v-for="comment in comments" v-bind:key="comment.id"> 
         <div>
-          <p><b>{{comment.user_id}}</b></p>
+          <p><b v-if="comment.user_id === 1">Miguel</b>
+          <b v-else-if="comment.user_id === 2">Cristian R.</b>
+          <b v-else-if="comment.user_id === 3">Carles Farré</b>
+          <b v-else-if="comment.user_id === 4">sisu psicologo</b>
+          <b v-else-if="comment.user_id === 5">Jaume Malgosa Broto</b>
+          <b v-else-if="comment.user_id === 6">Marc obiols rubio</b>
+          <b v-else-if="comment.user_id === 7">Miguel Salamero</b>
+          </p>
           <p style="font-size: 100%">{{comment.text}}</p>
           <p class="text-muted" style="font-size: 90%">
           {{comment.created_at | dateshow}}

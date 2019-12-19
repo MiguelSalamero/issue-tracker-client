@@ -65,7 +65,7 @@
 
     <div style="float:right">
       <button v-on:click="create" type="button" class="btn btn-outline-dark" data-disable-with="Create Issue">
-        <router-link to="/">Create Issue</router-link></button>
+        Create Issue</button>
       <button type="button" class="btn btn-outline-dark"><router-link to="/">Back</router-link></button>
       
     
@@ -83,6 +83,10 @@
 <script>
   import axios from 'axios';
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
   export default {
     name: 'CreateIssue',
     data() {
@@ -97,8 +101,11 @@
     methods: {
       create: function() {
         axios
-          .post('https://blooming-dusk-00596.herokuapp.com/api/issues?Title='+this.Title+'&Description='+this.Description+'&Type='+this.Type+'&Priority='+this.Priority+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
-          
+          .post('https://blooming-dusk-00596.herokuapp.com/api/issues?Title='+this.Title+'&Description='+this.Description+'&Type='+this.Type+'&Priority='+this.Priority+'&asignee_id='+this.Assignee+'&api_key=9zWzwy3pR5wrVcukdvz2', {headers: {Accept: '*/*'}})
+          .then(
+            sleep(800)
+            .then(() => {this.$router.push({ name: 'issues'})})
+          )
       }
     }
   }	
